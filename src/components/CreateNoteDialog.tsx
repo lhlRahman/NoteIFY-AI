@@ -4,11 +4,41 @@ import {Dialog, DialogHeader, DialogTrigger, DialogContent,DialogDescription, Di
 import { Input } from "./ui/input";
 import { Plus } from "lucide-react";
 import { Button } from "./ui/button";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+
 
 type Props = {}
 
 const CreateNoteDialog = (props: Props) => {
   const [input, setInput] = React.useState("")
+  const createNoteBook = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post("/api/createNoteBook", {
+        name: input,
+      });
+      return response.data;
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (input === "") {
+      window.alert("Please enter a name for your notebook");
+      return;
+    }
+    createNoteBook.mutate(undefined, {
+      onSuccess: () => {
+        window.alert("Notebook Created");
+      },
+      onError: () => {
+        window.alert("Error creating notebook");
+      },
+    });
+  }
+
+    ;
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -24,7 +54,7 @@ const CreateNoteDialog = (props: Props) => {
           You Can Create a New Notebook Here 😁
           </DialogDescription>
         </DialogHeader>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input value={input} onChange={e=> setInput(e.target.value)} placeholder="Name..."/>
           <div className="h-4"></div>
           <div className="flex items-center gap-2">
