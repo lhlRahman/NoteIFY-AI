@@ -12,6 +12,7 @@ type Props = {}
 
 const CreateNoteDialog = (props: Props) => {
   const [input, setInput] = React.useState("")
+  
   const createNoteBook = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/api/createNoteBook", {
@@ -29,10 +30,10 @@ const CreateNoteDialog = (props: Props) => {
     }
     createNoteBook.mutate(undefined, {
       onSuccess: () => {
-        window.alert("Notebook Created");
+        console.log("Notebook Created");
       },
-      onError: () => {
-        window.alert("Error creating notebook");
+      onError: (error) => {
+        console.error
       },
     });
   }
