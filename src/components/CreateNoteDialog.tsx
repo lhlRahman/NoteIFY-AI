@@ -27,6 +27,7 @@ const CreateNoteDialog = (props: Props) => {
       const response = await axios.post("/api/createNoteBook", {
         name: input,
       });
+      console.log(response.data + " is the response in createNoteBook");
       return response.data;
     },
   });
@@ -38,7 +39,7 @@ const CreateNoteDialog = (props: Props) => {
       return;
     }
     createNoteBook.mutate(undefined, {
-      onSuccess: (note_id) => {
+      onSuccess: ({note_id} ) => {
         router.push(`/notebook/${note_id}`);
       },
       onError: (error) => {
