@@ -6,7 +6,6 @@ import { $notes } from "@/lib/db/schema";
 import { UserButton, auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { ArrowLeft } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -51,7 +50,7 @@ return (
                 <>
                 <a href={`/notebook/${note.id}`} key={note.id}>
                   <div className="border border-stone-300 rounded-lg overflow-hidden flex flex-col hover:shadow-xl transition hover:-translate-y-1 mx-1">
-                    <img width={400} height={200} src={note.imageUrl || "" } />
+                    <img width={256} height={256} src={note.imageUrl || "" } />
                     <div className="p-4">
                       <h3 className="text-xl font-semibold text-grey-900">
                         {note.name}
